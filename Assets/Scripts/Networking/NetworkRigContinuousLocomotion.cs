@@ -8,7 +8,6 @@ public class NetworkRigContinuousLocomotion : NetworkBehaviour
 {
     public bool IsLocalNetworkRig => Object.HasStateAuthority;
 
-    [SerializeField] private LinkPlayerAvater playerAvater;
 
     [Header("RigComponents")]
     [SerializeField]
@@ -32,7 +31,6 @@ public class NetworkRigContinuousLocomotion : NetworkBehaviour
         if (IsLocalNetworkRig)
         {
             hardwareRig = FindObjectOfType<HardwareRig>();
-            playerAvater.LinkPlayerAvatarToVR();
             if (hardwareRig == null) 
                 Debug.LogError("Missing HardwareRig in the scene");
         }

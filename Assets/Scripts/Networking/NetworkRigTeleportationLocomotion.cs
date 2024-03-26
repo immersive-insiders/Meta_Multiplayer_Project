@@ -8,8 +8,6 @@ public class NetworkRigTeleportationLocomotion : NetworkBehaviour
 {
     public bool IsLocalNetworkRig => Object.HasStateAuthority;
 
-    [SerializeField] private LinkPlayerAvater playerAvater;
-
     [Header("RigComponents")]
     [SerializeField]
     private NetworkTransform playerTransform;
@@ -32,7 +30,6 @@ public class NetworkRigTeleportationLocomotion : NetworkBehaviour
         if (IsLocalNetworkRig)
         {
             hardwareRig = FindObjectOfType<HardwareRig>();
-            playerAvater.LinkPlayerAvatarToVR();
             if (hardwareRig == null) 
                 Debug.LogError("Missing HardwareRig in the scene");
         }

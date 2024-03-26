@@ -13,6 +13,10 @@ public class AvatarManager : MonoBehaviour
     private List<Transform> avatarObjects = new List<Transform>();
     private Animator avatarAnimator;
 
+    private int avatarIndex;
+
+    public int AvatarIndex { get => avatarIndex; set=> avatarIndex = value; }
+
     private void Start()
     {
         characters = FindObjectOfType<Characters>();
@@ -31,7 +35,8 @@ public class AvatarManager : MonoBehaviour
 
     private void SwitchAvatar(int index)
     {
-        
+        AvatarIndex = index;
+        Debug.Log("Avatar index is " +  AvatarIndex);
         avatarAnimator.avatar = avatarObjects[index + 1].GetComponent<Avatar>();
         AvatarMeshHelper.TransferMesh(avatarObjects[index + 1].gameObject, avatarObjects[0].gameObject);
     }

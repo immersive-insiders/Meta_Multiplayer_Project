@@ -12,12 +12,15 @@ public class RequestStateAuthorityForInteraction : NetworkBehaviour
     [SerializeField] private PointableUnityEventWrapper handGrabInteractor;
     [SerializeField] private Rigidbody _rb;
 
-    enum Status
+    [Networked]
+    private bool isGrabbed
     {
-        NotGrabbed,
-        Grabbed,
+        get => _isGrabbed;
+        set => _isGrabbed = value;
     }
-    Status status = Status.NotGrabbed;
+  
+
+    private bool _isGrabbed;
 
     // Start is called before the first frame update
     void Start()
@@ -29,27 +32,42 @@ public class RequestStateAuthorityForInteraction : NetworkBehaviour
 
     private void OnSelected(PointerEvent arg0)
     {
-        status = Status.Grabbed;
+        _isGrabbed = true;
+        Debug.Log("<<< Cube is grabbed " + _isGrabbed);
     }
 
     private void OnUnslected(PointerEvent arg0)
     {
-        status = Status.NotGrabbed;
+        _isGrabbed = false;
+        Debug.Log("<<< Cube is released " + _isGrabbed);
+
         if (_rb.isKinematic)
         {
             _rb.isKinematic = false;
         }
+
         if (!_rb.useGravity)
         {
             _rb.useGravity = true;
         }
     }
 
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void Grabbed()
+    {
+
+    }
+
 
     private void RequestAuthorityToInteract(PointerEvent arg0)
     {
-        if(status == Status.NotGrabbed)
-            Grab();
+        if (!_isGrabbed)
+            Object.RequestStateAuthority();
+        else
+        {
+            Debug.Log("<<<< Cube is grabbed you can't get authority");
+        }
+            //Grab();
     }
 
     public async void Grab()

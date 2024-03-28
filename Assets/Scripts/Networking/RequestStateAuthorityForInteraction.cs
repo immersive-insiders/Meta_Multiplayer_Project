@@ -32,14 +32,14 @@ public class RequestStateAuthorityForInteraction : NetworkBehaviour
 
     private void OnSelected(PointerEvent arg0)
     {
-        _isGrabbed = true;
-        Debug.Log("<<< Cube is grabbed " + _isGrabbed);
+        isGrabbed = true;
+        Debug.Log("<<< Cube is grabbed " + isGrabbed);
     }
 
     private void OnUnslected(PointerEvent arg0)
     {
-        _isGrabbed = false;
-        Debug.Log("<<< Cube is released " + _isGrabbed);
+        isGrabbed = false;
+        Debug.Log("<<< Cube is released " + isGrabbed);
 
         if (_rb.isKinematic)
         {
@@ -50,12 +50,6 @@ public class RequestStateAuthorityForInteraction : NetworkBehaviour
         {
             _rb.useGravity = true;
         }
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void Grabbed()
-    {
-
     }
 
 
